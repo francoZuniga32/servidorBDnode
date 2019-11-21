@@ -15,12 +15,6 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">  
-
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
         var cosa = [
             ['materia', 'necesaria', 'disponible']
         ];
@@ -30,16 +24,22 @@
 
             $.get(url, function(respuesta, status){
                 if (status == 'success'){
-                    for (let i = 0; i < 10; i++) {
+                    datos = respuesta;
+                     for (let i = 0; i < respuesta.length; i++) {
                         var necesaria = respuesta[i].necesaria;
                         var disponible = respuesta[i].disponible;
-                        cosa.push([i, i, i]);
+                        cosa.push([i, necesaria, disponible]);
                     }
                 }
             })
         });  
+        
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
 
-        console.log(cosa);
+      function drawChart() {
+
+        console.log(cosa.length);
 
         var data = google.visualization.arrayToDataTable(
             cosa

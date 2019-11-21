@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body onLoad="setTimeout(print(), 300);">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">  
+
+        var cosa = [
+            ['memoria', 'Kb']
+        ];
+        
+        function print(){
+            console.log("hola mundo");
+        }
+
+        function datos(){
+            function pedirDatos(){
+                $( document ).ready(function() {
+                    const url = 'http://localhost:3000/memoria'
+
+                    $.get(url, function(respuesta, status){
+                        if (status == 'success'){
+                            datos = respuesta;
+                            for (let i = 0; i < respuesta.length; i++) {
+                                var memoria = respuesta[i].memoria;
+                                cosa.push([i, memoria]);
+                            }
+                        }
+                    })
+                });
+                
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+                console.log("asdasda");
+            }
+
+            function drawChart() {
+                console.log(cosa.length);
+
+                var data = google.visualization.arrayToDataTable(
+                    cosa
+                );
+
+                var options = {
+                    title: 'Algoritmos de Ordenaminento',
+                    hAxis: {title: 'Elementos',  titleTextStyle: {color: '#333'}},
+                    vAxis: {minValue: 0}
+                };
+
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
+        }
+        
+    </script>
+
+    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+</body>
+</html>

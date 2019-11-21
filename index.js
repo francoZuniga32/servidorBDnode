@@ -1,7 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const morgan = require('morgan');
-const ejs = require('ejs');
+const so = require('os');
+const stream = require('stream');
 
 /**
  * cargamos los datos de la base de datos
@@ -46,7 +47,7 @@ app.use((req, res, next)=>{
 
 app.use('/static', express.static('public'));
 
-
+app.use('/memo', express.static('public/memoria.html'));
 
 app.get('/', function (req, res) {
     const cosa = ['1', '2'];
@@ -61,6 +62,13 @@ app.get('/datos',(req, responce)=>{
             responce.send(res);
         }
     })
+});
+
+app.get('/memoria',(req, res)=>{
+    var coso = [
+        {memoria: so.freemem()}
+    ];
+    res.send(coso);
 });
 
 
