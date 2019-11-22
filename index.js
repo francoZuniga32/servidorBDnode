@@ -45,6 +45,9 @@ app.use((req, res, next)=>{
     next();
 });
 
+/**
+ * metodos 
+ */
 app.use('/static', express.static('public'));
 
 app.use('/memo', express.static('public/memoria.html'));
